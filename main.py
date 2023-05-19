@@ -1,7 +1,6 @@
 import os
 import logging
 
-import re
 import json
 import torch
 import faiss
@@ -12,31 +11,12 @@ from langchain.document_loaders import TextLoader
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 #from langchain.text_splitter import CharacterTextSplitter
 from langchain.text_splitter import *
-from langchain.chains import RetrievalQA
-from langchain.prompts.prompt import PromptTemplate
-#from
 from faiss import normalize_L2
+
+from config import *
+from utils import *
+
 logging.basicConfig(format='%(asctime)s.%(msecs)03d [%(levelname)s] [%(filename)s:%(lineno)d] %(message)s',level=logging.DEBUG)
-
-    # res = []
-    # chunk_overlap = int(chunk_overlap * chunk_size)
-    # for seq in re.split(r'[\.。,，？\?!！；;\n]', texts):
-    #     if len(seq) < chunk_size:
-    #         res.append(seq)
-    #     else:
-    #         res += [seq[i * chunk_size:(i+1) * chunk_size] for i in range(len(seq)//chunk_size)]
-    #         start_idx = 0
-    #         cur_idx = min(start_idx + chunk_size, len(seq))
-    #         chunk_seq = seq[start_idx:cur_idx]
-    #         while start_idx < len(seq):
-    #             res.append(chunk_seq)
-    #             start_idx += chunk_size - chunk_overlap
-    #             cur_idx = min(start_idx + chunk_size, len(seq))
-    #             chunk_seq = seq[start_idx:cur_idx]
-    #
-    # return res
-
-
 
 
 class QA_model(object):
@@ -133,54 +113,28 @@ def print_log(args):
             logging.info(f'---{i}--length:{len(args)}---->{args}')
         else:
             logging.info(f'---{i}--------------------->{args}')
-def generate_prompt(texts, query, tokens_limit=2048):
 
-    template_size = 120
-    context = ''
-    for i in texts:
-        context += f'{i}\n'
-        if len(context) > tokens_limit - template_size - len(query):
-            break
-
-    #print_log(context)
-    #print_log(query)
-    prompt = f'''
-要求： 基于已知内容，请用中文以要求的格式简短直接地回答用户的问题。如果无法从中得到答案，请说 "根据已知信息无法回答该问题"。不允许在答案中添加额外成分。
-
-已知内容：
-
-{context[:tokens_limit]}
-问题： {query}
-
-格式： 问题:答案
-
-请根据提供的信息回答问题。
-'''
-    return prompt
-
-def split_text(texts):
-    texts = re.sub('\n{2,}','\n',texts)
-    splited_list = re.split(r'[\.。？\?!！；;\n]', texts)
-    if len(splited_list[-1]) != 0:
-        return splited_list
-    else:
-        return splited_list[:-1]
-
-def read_texts(file_path):
-    res = ''
-    with open(file_path, 'r', encoding='utf-8') as f:
-        for line in f.readlines():
-            res += line
-    return res
 if __name__ == '__main__':
     #pass
     #emb_path = '/opt/wmh_FileFolder/chatglm/chatglm_model/sentence_transformers'
-    emb_path = '/opt/wmh_FileFolder/chatglm/chatglm_model/Erlangshen-TCBert'
-    llm_path = '/opt/wmh_FileFolder/chatglm/chatglm_model'
-    doc_path = '/opt/wmh_FileFolder/chatglm/chatglm_model/kb/knowledge.txt'
-    index_path = '/opt/wmh_FileFolder/chatglm/chatglm_model/kb/myindex'
-    ids_texts_map_path = '/opt/wmh_FileFolder/chatglm/chatglm_model/kb/map.txt'
-    max_token_size = 2048
+    cur_dir = os.path.abspath(os.path.dirname(__file__))
+    print(cur_dir)
+    path = os.path.abspath(cur_dir + '/test')
+    print(path)
+    #raise ValueError
+
+
+    emb_path = os.path.abspath(cur_dir + embedding_model_dic['Erlangshen-TCBert'])
+    llm_path = os.path.abspath(cur_dir + llm_model_dic['chatglm'])
+    index_path = os.path.abspath(cur_dir + '/myindex')
+    doc_path = os.path.abspath(cur_dir + '/knowledge.txt')
+    ids_texts_map_path = os.path.abspath(cur_dir + '/map.txt')
+
+    # llm_path = '/opt/wmh_FileFolder/chatglm/chatglm_model'
+    # doc_path = '/opt/wmh_FileFolder/chatglm/chatglm_model/kb/knowledge.txt'
+    # index_path = '/opt/wmh_FileFolder/chatglm/chatglm_model/kb/myindex'
+    # ids_texts_map_path = '/opt/wmh_FileFolder/chatglm/chatglm_model/kb/map.txt'
+    #max_token_size = 2048
 
     query = '徐伦工作几年了'
     #query = '徐伦工作是'
