@@ -2,10 +2,12 @@
 
 ChatGLM6b知识外挂、文档问答。实测可以整合多个文档知识做逻辑问答，案例中根据[‘2023年徐伦工作是算法工程师,徐伦2021年毕业于信息科技大学计算机专业’]两条信息推断出"徐伦工作两年"
 
-ChatGLM下载:https://huggingface.co/THUDM/chatglm-6b
-embedding_model: https://huggingface.co/sentence-transformers
-                 https://huggingface.co/uer/sbert-base-chinese-nli
-                 https://huggingface.co/IDEA-CCNL/Erlangshen-TCBert-330M-Sentence-Embedding-Chinese
+
+ ChatGLM下载:https://huggingface.co/THUDM/chatglm-6b  
+
+ embedding_model: https://huggingface.co/sentence-transformers	  
+ https://huggingface.co/uer/sbert-base-chinese-nli    
+ https://huggingface.co/IDEA-CCNL/Erlangshen-TCBert-330M-Sentence-Embedding-Chinese
                  
 
 路径相对关系如下：
