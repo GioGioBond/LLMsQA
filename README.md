@@ -12,14 +12,16 @@ ChatGLM6b知识外挂、文档问答。实测可以整合多个文档知识做�
 - knowledge.txt
 - map.txt
 - myindex
-- sentence_transformers
-- - config.json
-- - tokenizer.json
-- - pytorch_model.bin
-- - vocab.json
-- chatglm
-- - pytorch_model-00001-of-00008.bin
-- - ...
+- embedding_model
+- - sentence_transformers
+- - - config.json
+- - - tokenizer.json
+- - - pytorch_model.bin
+- - - vocab.json
+- llm_model
+- - chatglm
+- - - pytorch_model-00001-of-00008.bin
+- - - ...
 
 # ToDO
 受embedding影响极大，直接影响了faiss的搜索结果，后面测试一下针对数据集finetune一下是否会更好。
