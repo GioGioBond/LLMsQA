@@ -124,7 +124,7 @@ if __name__ == '__main__':
     #raise ValueError
 
 
-    emb_path = os.path.abspath(cur_dir + embedding_model_dic['Erlangshen-TCBert'])
+    emb_path = os.path.abspath(cur_dir + embedding_model_dic['Erlangshen_TCBert'])
     llm_path = os.path.abspath(cur_dir + llm_model_dic['chatglm'])
     index_path = os.path.abspath(cur_dir + '/myindex')
     doc_path = os.path.abspath(cur_dir + '/knowledge.txt')
